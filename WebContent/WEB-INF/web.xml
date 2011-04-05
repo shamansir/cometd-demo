@@ -1,12 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>cometd-demo</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>   
+
+    <!-- ===================== display-name ================================ -->
+  
+    <display-name>cometd-demo</display-name>
+    
+    <!-- ===================== Continuation filter ========================= -->
+    <!-- it is required for jetty to work -->
+        
+    <filter>
+        <filter-name>Continuation</filter-name>
+        <filter-class>org.eclipse.jetty.continuation.ContinuationFilter</filter-class>
+        <init-param>
+              <param-name>faux</param-name>
+              <param-value>true</param-value>
+        </init-param>
+    </filter>     
+    
+    <!-- ===================== Logback Listener ============================ -->
+    <!-- see http://logback.qos.ch/manual/contextSelector.html -->    
+        
+    <listener>
+        <listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+    </listener>    
+    
+    <!-- ===================== Cometd Servlet ============================== -->
+    <!-- see http://cometd.org/documentation/cometd-java/server/configuration -->
+    
+    <servlet>
+        <servlet-name>cometd</servlet-name>
+        <servlet-class>org.cometd.server.continuation.ContinuationCometdServlet</servlet-class>
+        <init-param>
+            <param-name>timeout</param-name>
+            <param-value>5000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>multiFrameInterval</param-name>
+            <param-value>5000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>2</param-value>
+            <!-- 0 = warn, 1 = info, 2 = debug -->
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <!-- ===================== Sametimed Services Initializer ============== -->
+    
+    <servlet>
+        <servlet-name>intializer</servlet-name>
+        <servlet-class>org.sametimed.facade.SametimedServicesInitializer</servlet-class>
+        <load-on-startup>2</load-on-startup> <!-- after cometd intialization --> 
+    </servlet>
+    
+    <servlet>
+        <servlet-name>getconf</servlet-name>
+        <servlet-class>org.sametimed.facade.GetSametimedConfigurationServlet</servlet-class> 
+    </servlet>
+    
+    <!-- ===================== Configuration URL =========================== -->    
+
+    <servlet-mapping>
+        <servlet-name>getconf</servlet-name>
+        <url-pattern>/getconf</url-pattern>
+    </servlet-mapping>  
+    
+    <!-- ===================== Cometd Servlet URL ========================== -->    
+
+    <servlet-mapping>
+        <servlet-name>cometd</servlet-name>
+        <url-pattern>/cometd/*</url-pattern>
+    </servlet-mapping>
+  
+    <!-- ===================== welcome-file-list =========================== -->    
+    
+    <welcome-file-list>
+        <welcome-file>cometd-demo.html</welcome-file>
+    </welcome-file-list>
+    
+    <!-- ===================== Logback-required setup ====================== -->    
+    <!-- see http://logback.qos.ch/manual/contextSelector.html -->
+    
+    <!--    
+    <env-entry>
+      <description>JNDI logging context for sametimed app</description>
+      <env-entry-name>logback/context-name</env-entry-name>
+      <env-entry-value>ContextSametimed</env-entry-value>
+      <env-entry-type>java.lang.String</env-entry-type>      
+    </env-entry> 
+        
+    <env-entry>  
+        <description>URL for configuring logback context</description>
+        <env-entry-name>logback/configuration-resource</env-entry-name>
+        <env-entry-value>sametimed-logback.xml</env-entry-value>
+        <env-entry-type>java.lang.String</env-entry-type>        
+    </env-entry>
+    -->            
+    
 </web-app>
