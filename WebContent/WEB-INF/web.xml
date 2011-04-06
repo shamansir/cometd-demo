@@ -54,21 +54,21 @@
     
     <servlet>
         <servlet-name>intializer</servlet-name>
-        <servlet-class>org.sametimed.facade.SametimedServicesInitializer</servlet-class>
+        <servlet-class>name.foobar.cometddemo.CometdEntryPoint</servlet-class>
         <load-on-startup>2</load-on-startup> <!-- after cometd intialization --> 
     </servlet>
     
-    <servlet>
+    <!-- <servlet>
         <servlet-name>getconf</servlet-name>
         <servlet-class>org.sametimed.facade.GetSametimedConfigurationServlet</servlet-class> 
-    </servlet>
+    </servlet> -->
     
     <!-- ===================== Configuration URL =========================== -->    
 
-    <servlet-mapping>
+    <!-- <servlet-mapping>
         <servlet-name>getconf</servlet-name>
         <url-pattern>/getconf</url-pattern>
-    </servlet-mapping>  
+    </servlet-mapping> -->  
     
     <!-- ===================== Cometd Servlet URL ========================== -->    
 
