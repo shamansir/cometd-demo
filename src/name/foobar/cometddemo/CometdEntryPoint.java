@@ -5,6 +5,7 @@ package name.foobar.cometddemo;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.GenericServlet;
@@ -68,8 +69,11 @@ public class CometdEntryPoint extends GenericServlet {
         }
         
         public void tryLogin(final Client remote, Map<String, Object> data) {
-            chatChannel.publish(getClient(), 
-                                "ХУЙ ВЭЙ " + new Date().toString() + " : " + data.get("username"), 
+            final Map<String, String> enterInfo = new HashMap<String, String>();
+            enterInfo.put("status", "ENTERED at " + new Date().toString() + " : " + data.get("username"));
+            
+            chatChannel.publish(getClient(),
+                                enterInfo, 
                                 String.valueOf(2383783));            
         }
         

@@ -1,7 +1,7 @@
 var cometd = $.cometd;
 
 function updateInChat(cometObj) {
-	console.log('update: ' + cometObj);
+	alert('chat update: ' + cometObj.data.status);
 }
 
 cometd.init({ url: '/cometddemo/cometd' });

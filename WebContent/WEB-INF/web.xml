@@ -56,19 +56,7 @@
         <servlet-name>intializer</servlet-name>
         <servlet-class>name.foobar.cometddemo.CometdEntryPoint</servlet-class>
         <load-on-startup>2</load-on-startup> <!-- after cometd intialization --> 
-    </servlet>
-    
-    <!-- <servlet>
-        <servlet-name>getconf</servlet-name>
-        <servlet-class>org.sametimed.facade.GetSametimedConfigurationServlet</servlet-class> 
-    </servlet> -->
-    
-    <!-- ===================== Configuration URL =========================== -->    
-
-    <!-- <servlet-mapping>
-        <servlet-name>getconf</servlet-name>
-        <url-pattern>/getconf</url-pattern>
-    </servlet-mapping> -->  
+    </servlet> 
     
     <!-- ===================== Cometd Servlet URL ========================== -->    
 
@@ -82,24 +70,5 @@
     <welcome-file-list>
         <welcome-file>cometd-demo.html</welcome-file>
     </welcome-file-list>
-    
-    <!-- ===================== Logback-required setup ====================== -->    
-    <!-- see http://logback.qos.ch/manual/contextSelector.html -->
-    
-    <!--    
-    <env-entry>
-      <description>JNDI logging context for sametimed app</description>
-      <env-entry-name>logback/context-name</env-entry-name>
-      <env-entry-value>ContextSametimed</env-entry-value>
-      <env-entry-type>java.lang.String</env-entry-type>      
-    </env-entry> 
-        
-    <env-entry>  
-        <description>URL for configuring logback context</description>
-        <env-entry-name>logback/configuration-resource</env-entry-name>
-        <env-entry-value>sametimed-logback.xml</env-entry-value>
-        <env-entry-type>java.lang.String</env-entry-type>        
-    </env-entry>
-    -->            
     
 </web-app>
