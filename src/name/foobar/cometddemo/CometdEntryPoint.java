@@ -4,6 +4,7 @@
 package name.foobar.cometddemo;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.cometd.Bayeux;
+import org.cometd.Channel;
 import org.cometd.server.BayeuxService;
 import org.cometd.server.ext.TimesyncExtension;
 
@@ -51,10 +53,17 @@ public class CometdEntryPoint extends GenericServlet {
     }
     
     private class ComedDemoService extends BayeuxService {
+        
+        final Channel chatChannel;
 
         public ComedDemoService(Bayeux bayeux) {
             super(bayeux, "cometddemo");
-            // TODO Auto-generated constructor stub
+            
+            chatChannel = bayeux.getChannel("/chat", true);
+            
+            chatChannel.publish(getClient(), 
+                                "ХУЙ ВЭЙ " + new Date().toString(), 
+                                String.valueOf(2383783));
         }
         
     }
