@@ -4,6 +4,8 @@ function updateInChat(cometObj) {
 	console.log('update: ' + cometObj);
 }
 
-cometd.init({ url: '/cometd' });
+cometd.init({ url: '/cometddemo/cometd' });
 
 cometd.subscribe('/chat', updateInChat);
+
+cometd.publish('/login', { 'username': 'jackyfox' });

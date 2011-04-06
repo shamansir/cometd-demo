@@ -5,6 +5,7 @@ package name.foobar.cometddemo;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.ServletResponse;
 
 import org.cometd.Bayeux;
 import org.cometd.Channel;
+import org.cometd.Client;
 import org.cometd.server.BayeuxService;
 import org.cometd.server.ext.TimesyncExtension;
 
@@ -50,9 +52,10 @@ public class CometdEntryPoint extends GenericServlet {
         final BayeuxService service = new ComedDemoService(bayeux);
         
         bayeux.addExtension(new TimesyncExtension());        
+      
     }
     
-    private class ComedDemoService extends BayeuxService {
+    public class ComedDemoService extends BayeuxService {
         
         final Channel chatChannel;
 
@@ -60,10 +63,14 @@ public class CometdEntryPoint extends GenericServlet {
             super(bayeux, "cometddemo");
             
             chatChannel = bayeux.getChannel("/chat", true);
-            
+
+            subscribe("/login", "tryLogin");            
+        }
+        
+        public void tryLogin(final Client remote, Map<String, Object> data) {
             chatChannel.publish(getClient(), 
-                                "ХУЙ ВЭЙ " + new Date().toString(), 
-                                String.valueOf(2383783));
+                                "ХУЙ ВЭЙ " + new Date().toString() + " : " + data.get("username"), 
+                                String.valueOf(2383783));            
         }
         
     }
